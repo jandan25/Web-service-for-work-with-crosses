@@ -1,0 +1,665 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GoodWillModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CarModels">
+          <Key>
+            <PropertyRef Name="CarModelID" />
+          </Key>
+          <Property Name="CarModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufactorID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsShown" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manufactors">
+          <Key>
+            <PropertyRef Name="ManufactorID" />
+          </Key>
+          <Property Name="ManufactorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VenycleTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsShown" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Motors">
+          <Key>
+            <PropertyRef Name="MotorID" />
+          </Key>
+          <Property Name="MotorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarModelID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Engine" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CardanShaft" Type="nvarchar" MaxLength="500" />
+          <Property Name="HoursePower" Type="nvarchar" MaxLength="500" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="IsShown" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="ProductStateID" Type="int" Nullable="false" />
+          <Property Name="FormID" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Code1C" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Aplicability" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Analog" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ChangeGw" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Oem" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PackageCount" Type="int" Nullable="false" />
+          <Property Name="Volume" Type="float" Nullable="false" />
+          <Property Name="Weight" Type="float" Nullable="false" />
+          <Property Name="PriceUsd" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PriceRub" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IsShown" Type="bit" Nullable="false" />
+          <Property Name="BarCode" Type="nvarchar" MaxLength="250" />
+          <Property Name="AParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BpParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="EParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="GParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="HParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="NrParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="nvarchar" MaxLength="50" />
+          <Property Name="GroupID" Type="int" />
+          <Property Name="AverageSales" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsAndMotors">
+          <Key>
+            <PropertyRef Name="ProductAndMotorID" />
+          </Key>
+          <Property Name="ProductAndMotorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="MotorID" Type="int" Nullable="false" />
+          <Property Name="InPrice" Type="bit" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsAndOes">
+          <Key>
+            <PropertyRef Name="ProductAndOeID" />
+          </Key>
+          <Property Name="ProductAndOeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="OeID" Type="int" Nullable="false" />
+          <Property Name="InPrice" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VenycleTypes">
+          <Key>
+            <PropertyRef Name="VenycleTypeID" />
+          </Key>
+          <Property Name="VenycleTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsShown" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartnerID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="FireDate" Type="datetime2" Precision="7" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Password" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CarModels_ManufactorID">
+          <End Role="Manufactors" Type="Self.Manufactors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufactors">
+              <PropertyRef Name="ManufactorID" />
+            </Principal>
+            <Dependent Role="CarModels">
+              <PropertyRef Name="ManufactorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Manufactor_VenycleTypeID">
+          <End Role="VenycleTypes" Type="Self.VenycleTypes" Multiplicity="1" />
+          <End Role="Manufactors" Type="Self.Manufactors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VenycleTypes">
+              <PropertyRef Name="VenycleTypeID" />
+            </Principal>
+            <Dependent Role="Manufactors">
+              <PropertyRef Name="VenycleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsAndMotors_MotorID">
+          <End Role="Motors" Type="Self.Motors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsAndMotors" Type="Self.ProductsAndMotors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Motors">
+              <PropertyRef Name="MotorID" />
+            </Principal>
+            <Dependent Role="ProductsAndMotors">
+              <PropertyRef Name="MotorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsAndMotors_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsAndMotors" Type="Self.ProductsAndMotors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductsAndMotors">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsAndOes_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsAndOes" Type="Self.ProductsAndOes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductsAndOes">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_RoleID">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="UserRoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GoodWillModelStoreContainer">
+          <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="Manufactors" EntityType="Self.Manufactors" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="Motors" EntityType="Self.Motors" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="ProductsAndMotors" EntityType="Self.ProductsAndMotors" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="ProductsAndOes" EntityType="Self.ProductsAndOes" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="VenycleTypes" EntityType="Self.VenycleTypes" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="Staff" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="Staff" store:Type="Tables" />
+          <AssociationSet Name="FK_CarModels_ManufactorID" Association="Self.FK_CarModels_ManufactorID">
+            <End Role="Manufactors" EntitySet="Manufactors" />
+            <End Role="CarModels" EntitySet="CarModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Manufactor_VenycleTypeID" Association="Self.FK_Manufactor_VenycleTypeID">
+            <End Role="VenycleTypes" EntitySet="VenycleTypes" />
+            <End Role="Manufactors" EntitySet="Manufactors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsAndMotors_MotorID" Association="Self.FK_ProductsAndMotors_MotorID">
+            <End Role="Motors" EntitySet="Motors" />
+            <End Role="ProductsAndMotors" EntitySet="ProductsAndMotors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsAndMotors_ProductID" Association="Self.FK_ProductsAndMotors_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsAndMotors" EntitySet="ProductsAndMotors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsAndOes_ProductID" Association="Self.FK_ProductsAndOes_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsAndOes" EntitySet="ProductsAndOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_RoleID" Association="Self.FK_Users_RoleID">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GoodWillModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CarModels">
+          <Key>
+            <PropertyRef Name="CarModelID" />
+          </Key>
+          <Property Name="CarModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufactorID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsShown" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Manufactors" Relationship="Self.FK_CarModels_ManufactorID" FromRole="CarModels" ToRole="Manufactors" />
+        </EntityType>
+        <EntityType Name="Manufactors">
+          <Key>
+            <PropertyRef Name="ManufactorID" />
+          </Key>
+          <Property Name="ManufactorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VenycleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsShown" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CarModels" Relationship="Self.FK_CarModels_ManufactorID" FromRole="Manufactors" ToRole="CarModels" />
+          <NavigationProperty Name="VenycleTypes" Relationship="Self.FK_Manufactor_VenycleTypeID" FromRole="Manufactors" ToRole="VenycleTypes" />
+        </EntityType>
+        <EntityType Name="Motors">
+          <Key>
+            <PropertyRef Name="MotorID" />
+          </Key>
+          <Property Name="MotorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarModelID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Engine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CardanShaft" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HoursePower" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="IsShown" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProductsAndMotors" Relationship="Self.FK_ProductsAndMotors_MotorID" FromRole="Motors" ToRole="ProductsAndMotors" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="ProductStateID" Type="Int32" Nullable="false" />
+          <Property Name="FormID" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code1C" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Aplicability" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Analog" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChangeGw" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Oem" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PackageCount" Type="Int32" Nullable="false" />
+          <Property Name="Volume" Type="Double" Nullable="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="PriceUsd" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PriceRub" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IsShown" Type="Boolean" Nullable="false" />
+          <Property Name="BarCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BpParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="EParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="GParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="HParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="NrParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupID" Type="Int32" />
+          <Property Name="AverageSales" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductsAndMotors" Relationship="Self.FK_ProductsAndMotors_ProductID" FromRole="Products" ToRole="ProductsAndMotors" />
+          <NavigationProperty Name="ProductsAndOes" Relationship="Self.FK_ProductsAndOes_ProductID" FromRole="Products" ToRole="ProductsAndOes" />
+        </EntityType>
+        <EntityType Name="ProductsAndMotors">
+          <Key>
+            <PropertyRef Name="ProductAndMotorID" />
+          </Key>
+          <Property Name="ProductAndMotorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="MotorID" Type="Int32" Nullable="false" />
+          <Property Name="InPrice" Type="Boolean" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Motors" Relationship="Self.FK_ProductsAndMotors_MotorID" FromRole="ProductsAndMotors" ToRole="Motors" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_ProductsAndMotors_ProductID" FromRole="ProductsAndMotors" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="ProductsAndOes">
+          <Key>
+            <PropertyRef Name="ProductAndOeID" />
+          </Key>
+          <Property Name="ProductAndOeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="OeID" Type="Int32" Nullable="false" />
+          <Property Name="InPrice" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_ProductsAndOes_ProductID" FromRole="ProductsAndOes" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="VenycleTypes">
+          <Key>
+            <PropertyRef Name="VenycleTypeID" />
+          </Key>
+          <Property Name="VenycleTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsShown" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Manufactors" Relationship="Self.FK_Manufactor_VenycleTypeID" FromRole="VenycleTypes" ToRole="Manufactors" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_RoleID" FromRole="UserRoles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartnerID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="FireDate" Type="DateTime" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Password" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_Users_RoleID" FromRole="Users" ToRole="UserRoles" />
+        </EntityType>
+        <Association Name="FK_CarModels_ManufactorID">
+          <End Role="Manufactors" Type="Self.Manufactors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufactors">
+              <PropertyRef Name="ManufactorID" />
+            </Principal>
+            <Dependent Role="CarModels">
+              <PropertyRef Name="ManufactorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Manufactor_VenycleTypeID">
+          <End Role="VenycleTypes" Type="Self.VenycleTypes" Multiplicity="1" />
+          <End Role="Manufactors" Type="Self.Manufactors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VenycleTypes">
+              <PropertyRef Name="VenycleTypeID" />
+            </Principal>
+            <Dependent Role="Manufactors">
+              <PropertyRef Name="VenycleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsAndMotors_MotorID">
+          <End Role="Motors" Type="Self.Motors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsAndMotors" Type="Self.ProductsAndMotors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Motors">
+              <PropertyRef Name="MotorID" />
+            </Principal>
+            <Dependent Role="ProductsAndMotors">
+              <PropertyRef Name="MotorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsAndMotors_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsAndMotors" Type="Self.ProductsAndMotors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductsAndMotors">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductsAndOes_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductsAndOes" Type="Self.ProductsAndOes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductsAndOes">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_RoleID">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="UserRoleID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GoodWillEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarModels" EntityType="Self.CarModels" />
+          <EntitySet Name="Manufactors" EntityType="Self.Manufactors" />
+          <EntitySet Name="Motors" EntityType="Self.Motors" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="ProductsAndMotors" EntityType="Self.ProductsAndMotors" />
+          <EntitySet Name="ProductsAndOes" EntityType="Self.ProductsAndOes" />
+          <EntitySet Name="VenycleTypes" EntityType="Self.VenycleTypes" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_CarModels_ManufactorID" Association="Self.FK_CarModels_ManufactorID">
+            <End Role="Manufactors" EntitySet="Manufactors" />
+            <End Role="CarModels" EntitySet="CarModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Manufactor_VenycleTypeID" Association="Self.FK_Manufactor_VenycleTypeID">
+            <End Role="VenycleTypes" EntitySet="VenycleTypes" />
+            <End Role="Manufactors" EntitySet="Manufactors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsAndMotors_MotorID" Association="Self.FK_ProductsAndMotors_MotorID">
+            <End Role="Motors" EntitySet="Motors" />
+            <End Role="ProductsAndMotors" EntitySet="ProductsAndMotors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsAndMotors_ProductID" Association="Self.FK_ProductsAndMotors_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsAndMotors" EntitySet="ProductsAndMotors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductsAndOes_ProductID" Association="Self.FK_ProductsAndOes_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductsAndOes" EntitySet="ProductsAndOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_RoleID" Association="Self.FK_Users_RoleID">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GoodWillModelStoreContainer" CdmEntityContainer="GoodWillEntities">
+          <EntitySetMapping Name="CarModels">
+            <EntityTypeMapping TypeName="GoodWillModel.CarModels">
+              <MappingFragment StoreEntitySet="CarModels">
+                <ScalarProperty Name="CarModelID" ColumnName="CarModelID" />
+                <ScalarProperty Name="ManufactorID" ColumnName="ManufactorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsShown" ColumnName="IsShown" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufactors">
+            <EntityTypeMapping TypeName="GoodWillModel.Manufactors">
+              <MappingFragment StoreEntitySet="Manufactors">
+                <ScalarProperty Name="ManufactorID" ColumnName="ManufactorID" />
+                <ScalarProperty Name="VenycleTypeID" ColumnName="VenycleTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsShown" ColumnName="IsShown" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Motors">
+            <EntityTypeMapping TypeName="GoodWillModel.Motors">
+              <MappingFragment StoreEntitySet="Motors">
+                <ScalarProperty Name="MotorID" ColumnName="MotorID" />
+                <ScalarProperty Name="CarModelID" ColumnName="CarModelID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Engine" ColumnName="Engine" />
+                <ScalarProperty Name="CardanShaft" ColumnName="CardanShaft" />
+                <ScalarProperty Name="HoursePower" ColumnName="HoursePower" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="IsShown" ColumnName="IsShown" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="GoodWillModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ProductStateID" ColumnName="ProductStateID" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Code1C" ColumnName="Code1C" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Aplicability" ColumnName="Aplicability" />
+                <ScalarProperty Name="Analog" ColumnName="Analog" />
+                <ScalarProperty Name="ChangeGw" ColumnName="ChangeGw" />
+                <ScalarProperty Name="Oem" ColumnName="Oem" />
+                <ScalarProperty Name="PackageCount" ColumnName="PackageCount" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="PriceUsd" ColumnName="PriceUsd" />
+                <ScalarProperty Name="PriceRub" ColumnName="PriceRub" />
+                <ScalarProperty Name="IsShown" ColumnName="IsShown" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="AParam" ColumnName="AParam" />
+                <ScalarProperty Name="BParam" ColumnName="BParam" />
+                <ScalarProperty Name="BpParam" ColumnName="BpParam" />
+                <ScalarProperty Name="CParam" ColumnName="CParam" />
+                <ScalarProperty Name="DParam" ColumnName="DParam" />
+                <ScalarProperty Name="EParam" ColumnName="EParam" />
+                <ScalarProperty Name="FParam" ColumnName="FParam" />
+                <ScalarProperty Name="GParam" ColumnName="GParam" />
+                <ScalarProperty Name="HParam" ColumnName="HParam" />
+                <ScalarProperty Name="NrParam" ColumnName="NrParam" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="AverageSales" ColumnName="AverageSales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsAndMotors">
+            <EntityTypeMapping TypeName="GoodWillModel.ProductsAndMotors">
+              <MappingFragment StoreEntitySet="ProductsAndMotors">
+                <ScalarProperty Name="ProductAndMotorID" ColumnName="ProductAndMotorID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="MotorID" ColumnName="MotorID" />
+                <ScalarProperty Name="InPrice" ColumnName="InPrice" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsAndOes">
+            <EntityTypeMapping TypeName="GoodWillModel.ProductsAndOes">
+              <MappingFragment StoreEntitySet="ProductsAndOes">
+                <ScalarProperty Name="ProductAndOeID" ColumnName="ProductAndOeID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OeID" ColumnName="OeID" />
+                <ScalarProperty Name="InPrice" ColumnName="InPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VenycleTypes">
+            <EntityTypeMapping TypeName="GoodWillModel.VenycleTypes">
+              <MappingFragment StoreEntitySet="VenycleTypes">
+                <ScalarProperty Name="VenycleTypeID" ColumnName="VenycleTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsShown" ColumnName="IsShown" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="GoodWillModel.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GoodWillModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PartnerID" ColumnName="PartnerID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="FireDate" ColumnName="FireDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
