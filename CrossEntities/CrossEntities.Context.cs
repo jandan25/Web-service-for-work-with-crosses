@@ -12,6 +12,8 @@ namespace CrossEntities
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class GoodWillDbContext : DbContext
     {
@@ -34,5 +36,10 @@ namespace CrossEntities
         public virtual DbSet<VenycleTypes> VenycleTypes { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+    
+        public virtual ObjectResult<CrossSelection> pr_GetCrossSelection()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CrossSelection>("pr_GetCrossSelection");
+        }
     }
 }

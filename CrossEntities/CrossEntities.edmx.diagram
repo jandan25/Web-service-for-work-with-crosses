@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fa48f274aa5940ceb44bccbfe46bacf3" Name="Diagram1" ZoomLevel="51">
-        <EntityTypeShape EntityType="GoodWillModel.CarModels" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.Manufactors" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.Motors" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.Products" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.ProductsAndMotors" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.ProductsAndOes" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.VenycleTypes" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.UserRoles" Width="1.5" PointX="5.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="GoodWillModel.Users" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="GoodWillModel.FK_CarModels_ManufactorID" ManuallyRouted="false" />
-        <AssociationConnector Association="GoodWillModel.FK_Manufactor_VenycleTypeID" ManuallyRouted="false" />
-        <AssociationConnector Association="GoodWillModel.FK_ProductsAndMotors_MotorID" ManuallyRouted="false" />
-        <AssociationConnector Association="GoodWillModel.FK_ProductsAndMotors_ProductID" ManuallyRouted="false" />
-        <AssociationConnector Association="GoodWillModel.FK_ProductsAndOes_ProductID" ManuallyRouted="false" />
-        <AssociationConnector Association="GoodWillModel.FK_Users_RoleID" ManuallyRouted="false" />
+      <Diagram DiagramId="23c2331bf14048c38b7c2a2466666372" Name="Diagram1" ZoomLevel="51">
+        <EntityTypeShape EntityType="CrossModel.CarModels" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.Manufactors" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.Motors" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.Products" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.ProductsAndMotors" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.ProductsAndOes" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.VenycleTypes" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.UserRoles" Width="1.5" PointX="5.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CrossModel.Users" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="CrossModel.FK_CarModels_ManufactorID" ManuallyRouted="false" />
+        <AssociationConnector Association="CrossModel.FK_Manufactor_VenycleTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="CrossModel.FK_ProductsAndMotors_MotorID" ManuallyRouted="false" />
+        <AssociationConnector Association="CrossModel.FK_ProductsAndMotors_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="CrossModel.FK_ProductsAndOes_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="CrossModel.FK_Users_RoleID" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

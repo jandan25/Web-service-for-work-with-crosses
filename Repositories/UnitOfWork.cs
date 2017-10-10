@@ -7,6 +7,8 @@ using CrossEntities;
 using Repositories.Implementations;
 using GenericRepository.Interface;
 using System.Data.Entity.Validation;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 
 namespace Repositories
 {
@@ -44,6 +46,11 @@ namespace Repositories
         //{
         //    return RepositoryProvider.GetRepository<T>();
         //}
+
+        public ObjectResult<CrossSelection> GetCrossSelection()
+        {
+            return _context.pr_GetCrossSelection();
+        }
 
         public void Dispose()
         {

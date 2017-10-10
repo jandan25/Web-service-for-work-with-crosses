@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GoodWillModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CrossModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CarModels">
           <Key>
             <PropertyRef Name="CarModelID" />
@@ -209,7 +209,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GoodWillModelStoreContainer">
+        <Function Name="pr_GetCrossSelection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Production" />
+        <EntityContainer Name="CrossModelStoreContainer">
           <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="Production" store:Type="Tables" />
           <EntitySet Name="Manufactors" EntityType="Self.Manufactors" Schema="Production" store:Type="Tables" />
           <EntitySet Name="Motors" EntityType="Self.Motors" Schema="Production" store:Type="Tables" />
@@ -248,7 +249,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GoodWillModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CrossModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="CarModels">
           <Key>
             <PropertyRef Name="CarModelID" />
@@ -465,7 +466,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GoodWillEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="GoodWillDbContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CarModels" EntityType="Self.CarModels" />
           <EntitySet Name="Manufactors" EntityType="Self.Manufactors" />
           <EntitySet Name="Motors" EntityType="Self.Motors" />
@@ -499,15 +500,25 @@
             <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <FunctionImport Name="pr_GetCrossSelection" ReturnType="Collection(CrossModel.CrossSelection)" />
         </EntityContainer>
+        <ComplexType Name="CrossSelection">
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="TypeTsName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ManufactorName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ModelName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="MotorName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="EngineName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Comment" Nullable="false" MaxLength="500" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GoodWillModelStoreContainer" CdmEntityContainer="GoodWillEntities">
+        <EntityContainerMapping StorageEntityContainer="CrossModelStoreContainer" CdmEntityContainer="GoodWillDbContext">
           <EntitySetMapping Name="CarModels">
-            <EntityTypeMapping TypeName="GoodWillModel.CarModels">
+            <EntityTypeMapping TypeName="CrossModel.CarModels">
               <MappingFragment StoreEntitySet="CarModels">
                 <ScalarProperty Name="CarModelID" ColumnName="CarModelID" />
                 <ScalarProperty Name="ManufactorID" ColumnName="ManufactorID" />
@@ -517,7 +528,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Manufactors">
-            <EntityTypeMapping TypeName="GoodWillModel.Manufactors">
+            <EntityTypeMapping TypeName="CrossModel.Manufactors">
               <MappingFragment StoreEntitySet="Manufactors">
                 <ScalarProperty Name="ManufactorID" ColumnName="ManufactorID" />
                 <ScalarProperty Name="VenycleTypeID" ColumnName="VenycleTypeID" />
@@ -527,7 +538,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Motors">
-            <EntityTypeMapping TypeName="GoodWillModel.Motors">
+            <EntityTypeMapping TypeName="CrossModel.Motors">
               <MappingFragment StoreEntitySet="Motors">
                 <ScalarProperty Name="MotorID" ColumnName="MotorID" />
                 <ScalarProperty Name="CarModelID" ColumnName="CarModelID" />
@@ -542,7 +553,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="GoodWillModel.Products">
+            <EntityTypeMapping TypeName="CrossModel.Products">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
@@ -582,7 +593,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductsAndMotors">
-            <EntityTypeMapping TypeName="GoodWillModel.ProductsAndMotors">
+            <EntityTypeMapping TypeName="CrossModel.ProductsAndMotors">
               <MappingFragment StoreEntitySet="ProductsAndMotors">
                 <ScalarProperty Name="ProductAndMotorID" ColumnName="ProductAndMotorID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -593,7 +604,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductsAndOes">
-            <EntityTypeMapping TypeName="GoodWillModel.ProductsAndOes">
+            <EntityTypeMapping TypeName="CrossModel.ProductsAndOes">
               <MappingFragment StoreEntitySet="ProductsAndOes">
                 <ScalarProperty Name="ProductAndOeID" ColumnName="ProductAndOeID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -603,7 +614,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VenycleTypes">
-            <EntityTypeMapping TypeName="GoodWillModel.VenycleTypes">
+            <EntityTypeMapping TypeName="CrossModel.VenycleTypes">
               <MappingFragment StoreEntitySet="VenycleTypes">
                 <ScalarProperty Name="VenycleTypeID" ColumnName="VenycleTypeID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -612,7 +623,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="GoodWillModel.UserRoles">
+            <EntityTypeMapping TypeName="CrossModel.UserRoles">
               <MappingFragment StoreEntitySet="UserRoles">
                 <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -621,7 +632,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="GoodWillModel.Users">
+            <EntityTypeMapping TypeName="CrossModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="PartnerID" ColumnName="PartnerID" />
@@ -639,6 +650,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="pr_GetCrossSelection" FunctionName="CrossModel.Store.pr_GetCrossSelection">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="CrossModel.CrossSelection">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TypeTsName" ColumnName="TypeTsName" />
+                <ScalarProperty Name="ManufactorName" ColumnName="ManufactorName" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="MotorName" ColumnName="MotorName" />
+                <ScalarProperty Name="EngineName" ColumnName="EngineName" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

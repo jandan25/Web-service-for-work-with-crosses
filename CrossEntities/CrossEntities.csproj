@@ -68,6 +68,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CrossEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="CrossSelection.cs">
+      <DependentUpon>CrossEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Manufactors.cs">
       <DependentUpon>CrossEntities.tt</DependentUpon>
     </Compile>
@@ -106,6 +109,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="CrossEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CrossEntities.edmx</DependentUpon>
@@ -116,9 +122,6 @@
       <DependentUpon>CrossEntities.edmx</DependentUpon>
       <LastGenOutput>CrossEntities.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
