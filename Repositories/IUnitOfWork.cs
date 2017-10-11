@@ -10,6 +10,8 @@ namespace Repositories
         IGenericRepository<T> GetStandardRepo<T>() where T : class;
         T GetRepo<T, TEntity>() where T : IGenericRepository<TEntity> where TEntity : class;
 
+        //TODO: Добавить в интерфейс метод хранимой процедуры. Иначе она не будет доступна для работы при работе с интерфейсом.
+
         /// <summary>
         /// Синхронная фиксация изменений в бд
         /// </summary>
