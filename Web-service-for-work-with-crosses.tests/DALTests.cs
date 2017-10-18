@@ -57,6 +57,7 @@ namespace Web_service_for_work_with_crosses.tests
             var entity = repo.Get();
 
             //asert
+            //TODO: проверить еще количество полученных объектов
             Assert.AreNotEqual(entity, null);
         }
 
@@ -135,6 +136,7 @@ namespace Web_service_for_work_with_crosses.tests
             var expected = repo.Get();
 
             //asert
+            //TODO: проверка неполная. Надо, во-первых, проверять, что количество объектов возросло, во-вторых, что новый набор содержит добавленный объект 
             Assert.AreNotEqual(expected, actual);
         }
 
@@ -157,6 +159,7 @@ namespace Web_service_for_work_with_crosses.tests
             var expected = repo.Get();
 
             //asert
+            //TODO: проверка неполная. Надо, во-первых, проверять, что количество объектов возросло, во-вторых, что новый набор содержит добавленные объекты 
             Assert.AreNotEqual(expected, actual);
         }
 
@@ -174,6 +177,8 @@ namespace Web_service_for_work_with_crosses.tests
 
             //act
             car.FakeName = fakeName;
+            
+            // TODO: почему обновление не через метод репозитория? Что тут тогда тестируется? 
             contextStub.Object.Update(car);
             var newCar = repo.GetById(1);
 
@@ -197,6 +202,7 @@ namespace Web_service_for_work_with_crosses.tests
             }
             
             //act
+            // TODO: почему обновление не через метод репозитория? Что тут тогда тестируется? 
             contextStub.Object.Update(car);
             var newCar = repo.Get(x => x.FakeCarModelID >= 2);
 
