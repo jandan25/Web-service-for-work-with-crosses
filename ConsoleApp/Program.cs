@@ -13,10 +13,6 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            using (var unitOfWork = new Repositories.UnitOfWork())
-            {
-                //var products = unitOfWork.GetCrossSelection();
-            }
         }
     }
 }

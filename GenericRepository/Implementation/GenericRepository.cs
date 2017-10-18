@@ -116,11 +116,16 @@ namespace GenericRepository.Implementation
             }
         }
 
+        public virtual void SetEntityStateModified(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
         public virtual void Update(T entity)
         {
             if (entity == null) throw  new ArgumentException("Entity is null");
             _entities.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            SetEntityStateModified(entity);
         }
 
         public virtual void Update(IEnumerable<T> entities)
@@ -158,11 +163,6 @@ namespace GenericRepository.Implementation
             {
                 Delete(entity);
             }
-        }
-
-        public Task<T> GetByIdAsynс(object id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

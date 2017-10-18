@@ -114,9 +114,9 @@ namespace Repositories.Implementations
         }
 
 
-        public T GetCustomRepository<T, U>() where U : class
-        {
-            return GetRepository<T, U>();
-        }
+        //public T GetCustomRepository<T, U>() where U : class
+        //{
+        //    return GetRepository<T, U>();
+        //}
     }
 }

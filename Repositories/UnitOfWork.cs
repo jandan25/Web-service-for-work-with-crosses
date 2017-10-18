@@ -37,10 +37,10 @@ namespace Repositories
             return RepositoryProvider.GetStandartRepository<T>();
         }
 
-        public T GetRepo<T, TEntity>() where T : IGenericRepository<TEntity> where TEntity : class
-        {
-            return RepositoryProvider.GetCustomRepository<T, TEntity>();
-        }
+        //public T GetRepo<T, TEntity>() where T : IGenericRepository<TEntity> where TEntity : class
+        //{
+        //    return RepositoryProvider.GetCustomRepository<T, TEntity>();
+        //}
 
         //public T GetRepo<T>() where T : class
         //{

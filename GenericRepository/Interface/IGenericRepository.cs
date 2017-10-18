@@ -35,13 +35,20 @@ namespace GenericRepository.Interface
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int page = 0, int pageSize = 12);
 
 
+        /// <summary>
+        /// Get entity by identifier
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <returns>Entity</returns>
+        T GetById(object id);
 
         /// <summary>
-        /// 
+        /// Get entity by params
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<T> GetByIdAsynс(object id);
+        /// <param name="predicate"></param>
+        /// <param name="includeProperties"></param>
+        /// <returns>Entity</returns>
+        T GetByParam(Expression<Func<T, bool>> predicate, string includeProperties = "");
 
         /// <summary>
         /// 
