@@ -13,10 +13,5 @@ namespace Web_service_for_work_with_crosses.tests.fakeentities
         public FakeGenericRepository(DbContext context) : base(context)
         {
         }
-
-        public FakeCarModels Find(params object[] keyValues)
-        {
-            throw new NotImplementedException("Derive from FakeDbSet<T> and override Find");
-        }
     }
 }

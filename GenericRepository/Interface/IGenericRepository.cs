@@ -71,7 +71,12 @@ namespace GenericRepository.Interface
         void Insert(IEnumerable<T> entities);
 
         /// <summary>
-        /// Update entity
+        /// Change entity state to modified state
+        /// </summary>
+        void SetEntityStateModified(T entity);
+
+        /// <summary>
+        /// Update entity 
         /// </summary>
         /// <param name="entity">Entity</param>
         void Update(T entity);

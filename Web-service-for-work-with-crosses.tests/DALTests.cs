@@ -52,13 +52,14 @@ namespace Web_service_for_work_with_crosses.tests
             //arrange
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
-
+            var actualCount = 3;
             //act
             var entity = repo.Get();
+            var expectedCount = entity.Count();
 
             //asert
-            //TODO: проверить еще количество полученных объектов
             Assert.AreNotEqual(entity, null);
+            Assert.AreEqual(actualCount,expectedCount);
         }
 
         [TestMethod]
@@ -126,18 +127,19 @@ namespace Web_service_for_work_with_crosses.tests
             var model = new FakeCarModels
             {
                 FakeName = "four",
-                FakeCarModelID = 3,
-                FakeManufactorID = 4
+                FakeCarModelID = 4,
+                FakeManufactorID = 5
             };
-            var actual = repo.Get();
+            var actualCount = repo.Get().Count();
 
             //act
             repo.Insert(model);
-            var expected = repo.Get();
+            var expectedCount = repo.Get().Count();
+            var expectedRecord = repo.GetByParam(x=> x.FakeCarModelID == 4);
 
             //asert
-            //TODO: проверка неполная. Надо, во-первых, проверять, что количество объектов возросло, во-вторых, что новый набор содержит добавленный объект 
-            Assert.AreNotEqual(expected, actual);
+            Assert.AreEqual(actualCount + 1, expectedCount);
+            Assert.AreEqual(expectedRecord.FakeName,model.FakeName);
         }
 
         [TestMethod]
@@ -148,39 +150,37 @@ namespace Web_service_for_work_with_crosses.tests
             var repo = new FakeGenericRepository(testContext);
             List<FakeCarModels> list = new List<FakeCarModels>
             {
-                new FakeCarModels {FakeCarModelID = 4, FakeManufactorID = 5, FakeName = "One"},
-                new FakeCarModels {FakeCarModelID = 5, FakeManufactorID = 6, FakeName = "Two"},
-                new FakeCarModels {FakeCarModelID = 6, FakeManufactorID = 7, FakeName = "Three"}
+                new FakeCarModels {FakeCarModelID = 4, FakeManufactorID = 5, FakeName = "Four"},
+                new FakeCarModels {FakeCarModelID = 5, FakeManufactorID = 6, FakeName = "Five"},
+                new FakeCarModels {FakeCarModelID = 6, FakeManufactorID = 7, FakeName = "Six"}
             };
-            var actual = repo.Get();
+            var actualCount = repo.Get().Count();
 
             //act
             repo.Insert(list);
-            var expected = repo.Get();
+            var expectedCount = repo.Get().Count();
+            var expected = repo.GetByParam(x => x.FakeCarModelID == 6);
 
             //asert
-            //TODO: проверка неполная. Надо, во-первых, проверять, что количество объектов возросло, во-вторых, что новый набор содержит добавленные объекты 
-            Assert.AreNotEqual(expected, actual);
+            Assert.AreEqual(actualCount + 3, expectedCount);
+            Assert.AreEqual(list[2].FakeName,expected.FakeName);
         }
 
         [TestMethod]
         public void Update_Repo_OneRepoPlusReturned()
         {
             FakeGoodwillEntitesContext testContext = CreateContextWithTestData();
-            var contextStub = new Mock<GenericRepository<FakeCarModels>>(testContext);
-            contextStub.Setup(x => x.SetEntityStateModified(It.IsAny<FakeCarModels>()));
             var repo = new FakeGenericRepository(testContext);
-
+            
             //arrange
             var car = repo.GetByParam(x => x.FakeCarModelID == 1);
             string fakeName = "Alfasud1";
 
             //act
             car.FakeName = fakeName;
-            
-            // TODO: почему обновление не через метод репозитория? Что тут тогда тестируется? 
-            contextStub.Object.Update(car);
-            var newCar = repo.GetById(1);
+            repo.Update(car);
+            testContext.SaveChanges();
+            var newCar = repo.GetByParam(x => x.FakeCarModelID == 1);
 
             //asert
             Assert.AreEqual(fakeName, newCar.FakeName);
@@ -191,8 +191,6 @@ namespace Web_service_for_work_with_crosses.tests
         {
             //arrange
             var testContext = CreateContextWithTestData();
-            var contextStub = new Mock<GenericRepository<FakeCarModels>>(testContext);
-            contextStub.Setup(x => x.SetEntityStateModified(It.IsAny<FakeCarModels>()));
             var repo = new FakeGenericRepository(testContext);
             string expectedName = "change";
             var car = repo.Get(x => x.FakeCarModelID >= 2);
@@ -200,10 +198,10 @@ namespace Web_service_for_work_with_crosses.tests
             {
                 c.FakeName = expectedName;
             }
-            
+
             //act
-            // TODO: почему обновление не через метод репозитория? Что тут тогда тестируется? 
-            contextStub.Object.Update(car);
+            repo.Update(car);
+            testContext.SaveChanges();
             var newCar = repo.Get(x => x.FakeCarModelID >= 2);
 
             //asert
