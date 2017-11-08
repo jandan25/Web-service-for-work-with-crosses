@@ -27,6 +27,8 @@ namespace CrossEntities
         public Nullable<System.DateTime> FireDate { get; set; }
         public bool IsActive { get; set; }
         public System.Guid Password { get; set; }
+        public string RestEmail { get; set; }
+        public bool SendEmailNotifications { get; set; }
     
         public virtual UserRoles UserRoles { get; set; }
     }

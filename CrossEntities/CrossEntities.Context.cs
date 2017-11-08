@@ -20,6 +20,8 @@ namespace CrossEntities
         public GoodWillDbContext()
             : base("name=GoodWillDbContext")
         {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -37,9 +39,9 @@ namespace CrossEntities
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     
-        public virtual ObjectResult<CrossSelection> pr_GetCrossSelection()
+        public virtual ObjectResult<CrossSelectionResult> pr_GetCrossSelection()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CrossSelection>("pr_GetCrossSelection");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CrossSelectionResult>("pr_GetCrossSelection");
         }
     }
 }

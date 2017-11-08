@@ -19,7 +19,7 @@ namespace Repositories
         /// <summary>
         /// Выборка по кроссам
         /// </summary>
-        ObjectResult<CrossSelection> GetCrossSelection();
+        ObjectResult<CrossSelectionResult> GetCrossSelection();
 
         /// <summary>
         /// Асинхронная фиксация изменений в бд

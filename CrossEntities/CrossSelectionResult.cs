@@ -11,14 +11,14 @@ namespace CrossEntities
 {
     using System;
     
-    public partial class CrossSelection
+    public partial class CrossSelectionResult
     {
         public string Code { get; set; }
-        public string TypeTsName { get; set; }
-        public string ManufactorName { get; set; }
-        public string ModelName { get; set; }
+        public string TypeTs { get; set; }
+        public string ManufactorTS { get; set; }
+        public string Model { get; set; }
         public string MotorName { get; set; }
-        public string EngineName { get; set; }
+        public string MotorEngine { get; set; }
         public string Comment { get; set; }
     }
 }

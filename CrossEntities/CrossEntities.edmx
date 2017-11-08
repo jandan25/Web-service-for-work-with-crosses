@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CrossModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CrossModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CarModels">
           <Key>
             <PropertyRef Name="CarModelID" />
@@ -71,9 +71,6 @@
           <Property Name="HParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="NrParam" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="4000" Nullable="false" />
-          <Property Name="ImageData" Type="varbinary(max)" />
-          <Property Name="ImageMimeType" Type="nvarchar" MaxLength="50" />
-          <Property Name="GroupID" Type="int" />
           <Property Name="AverageSales" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductsAndMotors">
@@ -124,10 +121,12 @@
           <Property Name="MiddleName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreationDate" Type="date" Nullable="false" />
           <Property Name="FireDate" Type="datetime2" Precision="7" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Password" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RestEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SendEmailNotifications" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_CarModels_ManufactorID">
           <End Role="Manufactors" Type="Self.Manufactors" Multiplicity="1">
@@ -209,7 +208,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="pr_GetCrossSelection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Production" />
+        <Function Name="pr_GetCrossSelection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="CrossModelStoreContainer">
           <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="Production" store:Type="Tables" />
           <EntitySet Name="Manufactors" EntityType="Self.Manufactors" Schema="Production" store:Type="Tables" />
@@ -245,8 +244,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CrossModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -320,9 +318,6 @@
           <Property Name="HParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="NrParam" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GroupID" Type="Int32" />
           <Property Name="AverageSales" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ProductsAndMotors" Relationship="Self.FK_ProductsAndMotors_ProductID" FromRole="Products" ToRole="ProductsAndMotors" />
           <NavigationProperty Name="ProductsAndOes" Relationship="Self.FK_ProductsAndOes_ProductID" FromRole="Products" ToRole="ProductsAndOes" />
@@ -380,11 +375,13 @@
           <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FireDate" Type="DateTime" Precision="7" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="Password" Type="Guid" Nullable="false" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_Users_RoleID" FromRole="Users" ToRole="UserRoles" />
+          <Property Name="RestEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SendEmailNotifications" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_CarModels_ManufactorID">
           <End Role="Manufactors" Type="Self.Manufactors" Multiplicity="1">
@@ -500,15 +497,15 @@
             <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <FunctionImport Name="pr_GetCrossSelection" ReturnType="Collection(CrossModel.CrossSelection)" />
+          <FunctionImport Name="pr_GetCrossSelection" ReturnType="Collection(CrossModel.CrossSelectionResult)" />
         </EntityContainer>
-        <ComplexType Name="CrossSelection">
+        <ComplexType Name="CrossSelectionResult">
           <Property Type="String" Name="Code" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="TypeTsName" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="ManufactorName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ModelName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TypeTs" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ManufactorTS" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Model" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="MotorName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="EngineName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="MotorEngine" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="Comment" Nullable="false" MaxLength="500" />
         </ComplexType>
       </Schema>
@@ -585,9 +582,6 @@
                 <ScalarProperty Name="HParam" ColumnName="HParam" />
                 <ScalarProperty Name="NrParam" ColumnName="NrParam" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
-                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
-                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
                 <ScalarProperty Name="AverageSales" ColumnName="AverageSales" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -634,6 +628,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CrossModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="SendEmailNotifications" ColumnName="SendEmailNotifications" />
+                <ScalarProperty Name="RestEmail" ColumnName="RestEmail" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="PartnerID" ColumnName="PartnerID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
@@ -652,13 +648,13 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="pr_GetCrossSelection" FunctionName="CrossModel.Store.pr_GetCrossSelection">
           <ResultMapping>
-              <ComplexTypeMapping TypeName="CrossModel.CrossSelection">
+              <ComplexTypeMapping TypeName="CrossModel.CrossSelectionResult">
                 <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="TypeTsName" ColumnName="TypeTsName" />
-                <ScalarProperty Name="ManufactorName" ColumnName="ManufactorName" />
-                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="TypeTs" ColumnName="TypeTs" />
+                <ScalarProperty Name="ManufactorTS" ColumnName="ManufactorTS" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="MotorName" ColumnName="MotorName" />
-                <ScalarProperty Name="EngineName" ColumnName="EngineName" />
+                <ScalarProperty Name="MotorEngine" ColumnName="MotorEngine" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
               </ComplexTypeMapping>
             </ResultMapping>

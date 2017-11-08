@@ -68,7 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CrossEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="CrossSelection.cs">
+    <Compile Include="CrossSelectionResult.cs">
       <DependentUpon>CrossEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Manufactors.cs">

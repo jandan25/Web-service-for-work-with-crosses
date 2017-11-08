@@ -47,7 +47,7 @@ namespace Repositories
         //    return RepositoryProvider.GetRepository<T>();
         //}
 
-        public ObjectResult<CrossSelection> GetCrossSelection()
+        public ObjectResult<CrossSelectionResult> GetCrossSelection()
         {
             return _context.pr_GetCrossSelection();
         }
