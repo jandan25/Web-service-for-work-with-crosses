@@ -12,10 +12,8 @@ namespace Repositories.Implementations
     public class RepositoryFactory
     {
         private IDictionary<Type, Func<IGoodWillEntitiesContext, object>> _specreposfactories =
-            new Dictionary<Type, Func<IGoodWillEntitiesContext, object>>
-            {
-                {typeof(Users), context => new UsersRepository(context) }
-            };
+            new Dictionary<Type, Func<IGoodWillEntitiesContext, object>>();
+
         public Func<IGoodWillEntitiesContext, object> GetRepositoryFactory<T>() where T : class
         {
             _specreposfactories.TryGetValue(typeof(T), out var specrepofactory);

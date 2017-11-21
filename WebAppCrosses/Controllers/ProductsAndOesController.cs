@@ -13,7 +13,7 @@ using Repositories;
 
 namespace WebAppCrosses.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProductsAndOesController : BaseController<ProductsAndOesModel, ProductsAndOes>
     {
         public ProductsAndOesController() : base()

@@ -25,7 +25,6 @@ namespace Repositories.Implementations
             _repositories = new Dictionary<Type, object>();
         }
 
-
         /// <summary>
         /// Добавить новый репозиторий в словарь
         /// </summary>
@@ -103,7 +102,6 @@ namespace Repositories.Implementations
             return (T) repo;
         }
 
-        // last change 
         public IGenericRepository<T> GetStandartRepository<T>() where T : class
         {
             _repositories.TryGetValue(typeof(IGenericRepository<T>), out object repo);
@@ -113,13 +111,6 @@ namespace Repositories.Implementations
                 _repositories.Add(typeof(IGenericRepository<T>), repo);
             }
             return (IGenericRepository<T>)repo;
-            //return GetCustomRepository<IGenericRepository<T>, T>();
         }
-
-
-        //public T GetCustomRepository<T, U>() where U : class
-        //{
-        //    return GetRepository<T, U>();
-        //}
     }
 }

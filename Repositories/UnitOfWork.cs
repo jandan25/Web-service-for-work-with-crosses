@@ -16,7 +16,6 @@ namespace Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        bool _disposed;
         IGoodWillEntitiesContext _context;
         IRepositoryProvider _provider;
 
@@ -25,13 +24,11 @@ namespace Repositories
         {
             _context = new GoodWillDbContext();
             _provider = new RepositoryProvider(_context, new RepositoryFactory());
-            _disposed = false;
         }
         public UnitOfWork(IGoodWillEntitiesContext context)
         {
             _context = context;
             _provider = new RepositoryProvider(context, new RepositoryFactory());
-            _disposed = false;
         }
 
         public UnitOfWork(GoodWillDbContext context)

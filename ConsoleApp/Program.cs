@@ -14,17 +14,6 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            int lengthOfPassword = 8;
-            string guid = Guid.NewGuid().ToString().Replace("-", "");
-
-            Console.WriteLine(guid.Substring(0, lengthOfPassword));
-            Console.ReadLine();
-
-            //var guidstr = "BB6D3B7A-5F0F-0518-5DD0-4F7C94D02955";
-            //Guid newGuid = Guid.Parse(guidstr);
-            //Console.WriteLine("Converted {0} to a Guid", newGuid.ToString());
-            //Console.ReadLine();
-
             //UnitOfWorkFactory Factory = new UnitOfWorkFactory();
             //using (var unitOfWork = Factory.Create())
             //{

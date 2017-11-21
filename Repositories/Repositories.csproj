@@ -49,9 +49,7 @@
   <ItemGroup>
     <Compile Include="Implementations\RepositoryFactory.cs" />
     <Compile Include="Implementations\RepositoryProvider.cs" />
-    <Compile Include="Implementations\UsersRepository.cs" />
     <Compile Include="Interfaces\IRepositoryProvider.cs" />
-    <Compile Include="Interfaces\IUsersRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUnitOfWorkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

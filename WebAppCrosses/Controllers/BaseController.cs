@@ -60,11 +60,6 @@ namespace WebAppCrosses.Controllers
                 var repo = unitOfWork.GetStandardRepo<T>();
                 repo.Insert(newcarmodel);
                 await unitOfWork.SaveChangesAsync();
-
-                ////узнаем id чтобы вывести по ссылке запись
-                //var idModel = (int)model.PropertyByAtt<KeyAttribute>().GetValue(newcarmodel); // newcarmodel попробовать оба
-                //return CreatedAtRoute("DefaultApi", new { id = idModel }, model);
-
                 return Ok(newcarmodel);
             }
         }
@@ -90,7 +85,7 @@ namespace WebAppCrosses.Controllers
 
                 var repo = unitOfWork.GetStandardRepo<T>();
                 repo.Update(newmodel);
-                //repo.SetEntityStateModified(newmodel);
+                repo.SetEntityStateModified(newmodel);
                 await unitOfWork.SaveChangesAsync();
                 return StatusCode(HttpStatusCode.NoContent);
             }

@@ -34,24 +34,6 @@ namespace Web_service_for_work_with_crosses.tests
             return context;
         }
 
-            //// Добавляем в список 3 сущности
-            //List<FakeCarModels> list = new List<FakeCarModels>
-            //{
-            //    new FakeCarModels {FakeCarModelID = 1, FakeManufactorID = 2, FakeName = "One"},
-            //    new FakeCarModels {FakeCarModelID = 2, FakeManufactorID = 3, FakeName = "Two"},
-            //    new FakeCarModels {FakeCarModelID = 3, FakeManufactorID = 4, FakeName = "Three"}
-            //};
-            //FakeSet<FakeCarModels> set = GetDbSetStub(list);
-
-
-            //Mock<FakeGoodwillEntitesContext> contextStub = new Mock<FakeGoodwillEntitesContext>();
-
-            //contextStub.Setup(x => x.Set<FakeCarModels>())
-            //    .Returns(() => set);
-
-            //return contextStub.Object;
-        //}
-
         [TestMethod]
         public void Get_Repo_ReposelectionReturned()
         {
@@ -225,7 +207,6 @@ namespace Web_service_for_work_with_crosses.tests
             //act
             var actual = repo.Get(x => x.CarModelID == deletedID);
             repo.Delete(deletedID);
-            //repo.Delete(deletedID);
             var expected = repo.Get(x => x.CarModelID == deletedID);
 
             //asert
