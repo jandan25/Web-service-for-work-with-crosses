@@ -8,7 +8,7 @@ using CrossEntities;
 
 namespace Repositories.Interfaces
 {
-    public interface IrepositoryProvider
+    public interface IRepositoryProvider
     {
         /// <summary>
         /// Получить стандарный репозиторий
@@ -29,6 +29,6 @@ namespace Repositories.Interfaces
         /// Если для какой либо сущности определена дополнительная реализация репозитория, 
         /// </remarks>
         /// <returns></returns>
-        T GetCustomRepository<T, U>() where U : class;
+        T GetCustomRepository<U, T>() where U : class;
     }
 }

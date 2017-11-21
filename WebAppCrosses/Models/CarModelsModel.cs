@@ -9,6 +9,7 @@ namespace WebAppCrosses.Models
 {
     public class CarModelsModel
     { 
+        [Key]
         public int CarModelID { get; set; }
 
         //range example

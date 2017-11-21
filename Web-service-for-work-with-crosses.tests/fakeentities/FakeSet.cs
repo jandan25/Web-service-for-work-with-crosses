@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Castle.Components.DictionaryAdapter.Xml;
-using Web_service_for_work_with_crosses.tests.fakeentities;
 
 namespace RepositoriesTests.Production
 {
@@ -58,7 +53,8 @@ namespace RepositoriesTests.Production
             return item;
         }
 
-        public T Create()
+        //вносил правки проверить
+        public override T Create()
         {
             return Activator.CreateInstance<T>();
         }
@@ -68,7 +64,7 @@ namespace RepositoriesTests.Production
             return Activator.CreateInstance<TDerivedEntity>();
         }
 
-        public ObservableCollection<T> Local
+        public override ObservableCollection<T> Local
         {
             get { return _data; }
         }

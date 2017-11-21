@@ -7,11 +7,23 @@ using System.Web;
 using CrossEntities;
 using Microsoft.Owin.Security.OAuth;
 using WebAppCrosses.Attributes;
+using Repositories;
 
 namespace WebAppCrosses
 {
     public class MyAuthorizarionServerProvider : OAuthAuthorizationServerProvider
     {
+        private IUnitOfWorkFactory _factory;
+
+        public MyAuthorizarionServerProvider()
+        {
+            _factory = new UnitOfWorkFactory();
+        }
+        public MyAuthorizarionServerProvider(IUnitOfWorkFactory factory)
+        {
+            _factory = factory;
+        }
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated(); // 
@@ -37,7 +49,7 @@ namespace WebAppCrosses
 
         public Users GetUser(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            using (var unitOfWork = new Repositories.UnitOfWork())
+            using (IUnitOfWork unitOfWork = _factory.Create())
             {
                 var repo = unitOfWork.GetStandardRepo<Users>();
                 var user = repo.GetByParam(u => u.Login == context.UserName && u.Password.ToString() == context.Password);
@@ -47,7 +59,7 @@ namespace WebAppCrosses
 
         public string GetUserRole(Users user)
         {
-            using (var unitOfWork = new Repositories.UnitOfWork())
+            using (IUnitOfWork unitOfWork = _factory.Create())
             {
                 var repo = unitOfWork.GetStandardRepo<UserRoles>();
                 var request = repo.GetByParam(u => u.UserRoleID == user.RoleID);

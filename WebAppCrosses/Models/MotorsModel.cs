@@ -9,6 +9,7 @@ namespace WebAppCrosses.Models
 {
     public class MotorsModel
     {
+        [Key]
         public int MotorID { get; set; }
 
         [RegularExpression("([1-9][0-9]*)")] // for 1-inf

@@ -7,26 +7,23 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using CrossEntities;
+using Repositories.Interfaces;
+using CrossEntities.Interfaces;
 
 namespace Repositories.Implementations
 {
-    public partial class RepositoryProvider
+    public class RepositoryProvider : IRepositoryProvider
     {
-        public RepositoryProvider()
-        { }
+        private readonly IGoodWillEntitiesContext _context;
+        private readonly RepositoryFactory _factory;
+        private IDictionary<Type, object> _repositories;
 
-        public RepositoryProvider(GoodWillDbContext context, RepositoryProvider repository)
+        public RepositoryProvider(IGoodWillEntitiesContext context, RepositoryFactory factory)
         {
-            this._context = context;
-            this._repository = repository;
-            //this._repositoryFactory = factory;
-            Repositories = new Dictionary<Type, object>();
+            _context = context;
+            _factory = factory;
+            _repositories = new Dictionary<Type, object>();
         }
-
-        private GoodWillDbContext _context;
-        //private RepositoryFactory _repositoryFactory;
-        private RepositoryProvider _repository;
-        private Dictionary<Type, object> Repositories { get; set; }
 
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace Repositories.Implementations
         /// </remarks>
         private void SetRepository<T>(T repository)
         {
-            Repositories[typeof(T)] = repository;
+            _repositories[typeof(T)] = repository;
         }
 
         /// <summary>
@@ -55,11 +52,10 @@ namespace Repositories.Implementations
         /// За непосредственное создание объекта репозитория отвечает фабрика RepositoryFactory. 
         /// Основная задача в данном случае - определить правильную фабрику по типу сущности.
         /// </remarks>
-        private T MakeRepository<T, U>() where U : class
+        private T MakeRepository<U, T>() where U : class
         {
-            var r = _repository.GetFactory<U>();
-            var repo = r(this._context);
-            return (T) repo;
+            var repofactory = _factory.GetRepositoryFactory<U>();
+            return (T)repofactory(_context);
         }
 
         /// <summary>
@@ -95,22 +91,29 @@ namespace Repositories.Implementations
         /// Получить репозиторий. Если необходимый репозиторий найден в коллекции Repositories, то взять оттуда.
         /// Если не найден, то создать объект репозитория и поместить в эту коллекцию.
         /// </remarks>
-        private T GetRepository<T, U>() where U : class
+        public T GetCustomRepository<U, T>() where U : class
         {
             object repo;
-            Repositories.TryGetValue(typeof(T), out repo);
+            _repositories.TryGetValue(typeof(T), out repo);
             if (repo == null)
             {
-                repo = MakeRepository<T, U>();
-                SetRepository(repo);
+                repo = MakeRepository<U, T>();
+                _repositories.Add(typeof(T), repo);
             }
             return (T) repo;
         }
 
-
+        // last change 
         public IGenericRepository<T> GetStandartRepository<T>() where T : class
         {
-            return GetRepository<IGenericRepository<T>, T>();
+            _repositories.TryGetValue(typeof(IGenericRepository<T>), out object repo);
+            if (repo == null)
+            {
+                repo = MakeRepository<T, IGenericRepository<T>>();
+                _repositories.Add(typeof(IGenericRepository<T>), repo);
+            }
+            return (IGenericRepository<T>)repo;
+            //return GetCustomRepository<IGenericRepository<T>, T>();
         }
 
 

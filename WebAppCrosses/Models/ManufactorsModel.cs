@@ -9,6 +9,7 @@ namespace WebAppCrosses.Models
 {
     public class ManufactorsModel
     {
+        [Key]
         public int ManufactorID { get; set; }
 
         [Required]

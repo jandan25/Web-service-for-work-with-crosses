@@ -1,4 +1,6 @@
-﻿using GenericRepository.Implementation;
+﻿using CrossEntities;
+using CrossEntities.Interfaces;
+using GenericRepository.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Web_service_for_work_with_crosses.tests.fakeentities
 {
-    class FakeGenericRepository : GenericRepository<FakeCarModels>
+    public class FakeGenericRepository : GenericRepository<CarModels>
     {
-        public FakeGenericRepository(DbContext context) : base(context)
+        public FakeGenericRepository(IGoodWillEntitiesContext context) : base(context)
         {
         }
     }

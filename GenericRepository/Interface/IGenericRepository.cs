@@ -34,7 +34,6 @@ namespace GenericRepository.Interface
         /// <returns>Entities</returns>
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int page = 0, int pageSize = 12);
 
-
         /// <summary>
         /// Get entity by identifier
         /// </summary>

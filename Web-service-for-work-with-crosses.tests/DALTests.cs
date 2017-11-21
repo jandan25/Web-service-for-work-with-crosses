@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using CrossEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GenericRepository.Implementation;
-using GenericRepository.Interface;
 using Moq;
-using Repositories;
 using RepositoriesTests.Production;
 using Web_service_for_work_with_crosses.tests.fakeentities;
+using CrossEntities;
 
 namespace Web_service_for_work_with_crosses.tests
 {
@@ -28,23 +22,35 @@ namespace Web_service_for_work_with_crosses.tests
         /// <returns></returns>
         private static FakeGoodwillEntitesContext CreateContextWithTestData()
         {
-            // Добавляем в список 3 сущности
-            List<FakeCarModels> list = new List<FakeCarModels>
+            var context = new FakeGoodwillEntitesContext
             {
-                new FakeCarModels {FakeCarModelID = 1, FakeManufactorID = 2, FakeName = "One"},
-                new FakeCarModels {FakeCarModelID = 2, FakeManufactorID = 3, FakeName = "Two"},
-                new FakeCarModels {FakeCarModelID = 3, FakeManufactorID = 4, FakeName = "Three"}
+                CarModels =
+                {
+                    new CarModels {CarModelID = 1, ManufactorID = 1, Name = "One", IsShown = true},
+                    new CarModels {CarModelID = 2, ManufactorID = 2, Name = "Two", IsShown = true},
+                    new CarModels {CarModelID = 3, ManufactorID = 3, Name = "Three", IsShown = true}
+                }
             };
-            FakeSet<FakeCarModels> set = GetDbSetStub(list);
-
-
-            Mock<FakeGoodwillEntitesContext> contextStub = new Mock<FakeGoodwillEntitesContext>();
-
-            contextStub.Setup(x => x.Set<FakeCarModels>())
-                .Returns(() => set);
-
-            return contextStub.Object;
+            return context;
         }
+
+            //// Добавляем в список 3 сущности
+            //List<FakeCarModels> list = new List<FakeCarModels>
+            //{
+            //    new FakeCarModels {FakeCarModelID = 1, FakeManufactorID = 2, FakeName = "One"},
+            //    new FakeCarModels {FakeCarModelID = 2, FakeManufactorID = 3, FakeName = "Two"},
+            //    new FakeCarModels {FakeCarModelID = 3, FakeManufactorID = 4, FakeName = "Three"}
+            //};
+            //FakeSet<FakeCarModels> set = GetDbSetStub(list);
+
+
+            //Mock<FakeGoodwillEntitesContext> contextStub = new Mock<FakeGoodwillEntitesContext>();
+
+            //contextStub.Setup(x => x.Set<FakeCarModels>())
+            //    .Returns(() => set);
+
+            //return contextStub.Object;
+        //}
 
         [TestMethod]
         public void Get_Repo_ReposelectionReturned()
@@ -68,14 +74,14 @@ namespace Web_service_for_work_with_crosses.tests
             //arrange
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
-            int expectedId = 4;
+            int expectedId = 3;
 
             //act
-            var actual = repo.GetByParam(x => x.FakeCarModelID > 1 && x.FakeName == "Three");
+            var actual = repo.GetByParam(x => x.CarModelID > 1 && x.Name == "Three");
 
             //asert
             Assert.AreNotEqual(actual, null);
-            Assert.AreEqual(actual.FakeManufactorID, expectedId);
+            Assert.AreEqual(actual.ManufactorID, expectedId);
         }
 
         [TestMethod]
@@ -85,7 +91,7 @@ namespace Web_service_for_work_with_crosses.tests
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
             //act
-            var actual = repo.GetByParam(x => x.FakeCarModelID > 1 && x.FakeManufactorID > 1);
+            var actual = repo.GetByParam(x => x.CarModelID > 1 && x.ManufactorID > 1);
             //asert
             Assert.AreNotEqual(actual, null);
         }
@@ -97,7 +103,7 @@ namespace Web_service_for_work_with_crosses.tests
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
             //act
-            var actual = repo.GetByParamAsynс(x => x.FakeCarModelID > 1 && x.FakeManufactorID > 1);
+            var actual = repo.GetByParamAsynс(x => x.CarModelID > 1 && x.ManufactorID > 1);
             //asert
             Assert.AreNotEqual(actual, null);
         }
@@ -115,7 +121,7 @@ namespace Web_service_for_work_with_crosses.tests
 
             //assert
             Assert.AreNotEqual(entity, null);
-            Assert.AreEqual(entity.FakeCarModelID, id);
+            Assert.AreEqual(entity.CarModelID, id);
         }
 
         [TestMethod]
@@ -124,22 +130,22 @@ namespace Web_service_for_work_with_crosses.tests
             //arrange
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
-            var model = new FakeCarModels
+            var model = new CarModels
             {
-                FakeName = "four",
-                FakeCarModelID = 4,
-                FakeManufactorID = 5
+                Name = "four",
+                CarModelID = 4,
+                ManufactorID = 5
             };
             var actualCount = repo.Get().Count();
 
             //act
             repo.Insert(model);
             var expectedCount = repo.Get().Count();
-            var expectedRecord = repo.GetByParam(x=> x.FakeCarModelID == 4);
+            var expectedRecord = repo.GetByParam(x=> x.CarModelID == 4);
 
             //asert
             Assert.AreEqual(actualCount + 1, expectedCount);
-            Assert.AreEqual(expectedRecord.FakeName,model.FakeName);
+            Assert.AreEqual(expectedRecord.Name,model.Name);
         }
 
         [TestMethod]
@@ -148,22 +154,22 @@ namespace Web_service_for_work_with_crosses.tests
             //arrange
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
-            List<FakeCarModels> list = new List<FakeCarModels>
+            List<CarModels> list = new List<CarModels>
             {
-                new FakeCarModels {FakeCarModelID = 4, FakeManufactorID = 5, FakeName = "Four"},
-                new FakeCarModels {FakeCarModelID = 5, FakeManufactorID = 6, FakeName = "Five"},
-                new FakeCarModels {FakeCarModelID = 6, FakeManufactorID = 7, FakeName = "Six"}
+                new CarModels {CarModelID = 4, ManufactorID = 5, Name = "Four"},
+                new CarModels {CarModelID = 5, ManufactorID = 6, Name = "Five"},
+                new CarModels {CarModelID = 6, ManufactorID = 7, Name = "Six"}
             };
             var actualCount = repo.Get().Count();
 
             //act
             repo.Insert(list);
             var expectedCount = repo.Get().Count();
-            var expected = repo.GetByParam(x => x.FakeCarModelID == 6);
+            var expected = repo.GetByParam(x => x.CarModelID == 6);
 
             //asert
             Assert.AreEqual(actualCount + 3, expectedCount);
-            Assert.AreEqual(list[2].FakeName,expected.FakeName);
+            Assert.AreEqual(list[2].Name,expected.Name);
         }
 
         [TestMethod]
@@ -173,17 +179,17 @@ namespace Web_service_for_work_with_crosses.tests
             var repo = new FakeGenericRepository(testContext);
             
             //arrange
-            var car = repo.GetByParam(x => x.FakeCarModelID == 1);
+            var car = repo.GetByParam(x => x.CarModelID == 1);
             string fakeName = "Alfasud1";
 
             //act
-            car.FakeName = fakeName;
+            car.Name = fakeName;
             repo.Update(car);
             testContext.SaveChanges();
-            var newCar = repo.GetByParam(x => x.FakeCarModelID == 1);
+            var newCar = repo.GetByParam(x => x.CarModelID == 1);
 
             //asert
-            Assert.AreEqual(fakeName, newCar.FakeName);
+            Assert.AreEqual(fakeName, newCar.Name);
         }
 
         [TestMethod]
@@ -193,16 +199,16 @@ namespace Web_service_for_work_with_crosses.tests
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
             string expectedName = "change";
-            var car = repo.Get(x => x.FakeCarModelID >= 2);
+            var car = repo.Get(x => x.CarModelID >= 2);
             foreach (var c in car)
             {
-                c.FakeName = expectedName;
+                c.Name = expectedName;
             }
 
             //act
             repo.Update(car);
             testContext.SaveChanges();
-            var newCar = repo.Get(x => x.FakeCarModelID >= 2);
+            var newCar = repo.Get(x => x.CarModelID >= 2);
 
             //asert
             Assert.AreNotEqual(car, newCar);
@@ -217,10 +223,10 @@ namespace Web_service_for_work_with_crosses.tests
             int deletedID = 2;
 
             //act
-            var actual = repo.Get(x => x.FakeCarModelID == deletedID);
+            var actual = repo.Get(x => x.CarModelID == deletedID);
             repo.Delete(deletedID);
             //repo.Delete(deletedID);
-            var expected = repo.Get(x => x.FakeCarModelID == deletedID);
+            var expected = repo.Get(x => x.CarModelID == deletedID);
 
             //asert
             Assert.AreNotEqual(expected, actual);
@@ -232,16 +238,15 @@ namespace Web_service_for_work_with_crosses.tests
             //arrange
             var testContext = CreateContextWithTestData();
             var repo = new FakeGenericRepository(testContext);
-            List<FakeCarModels> list = new List<FakeCarModels>
+            List<CarModels> list = new List<CarModels>
             {
-                new FakeCarModels {FakeCarModelID = 3, FakeManufactorID = 4, FakeName = "Three"}
+                new CarModels {CarModelID = 3, ManufactorID = 4, Name = "Three"}
             };
-            string expectedName = "change";
 
             //act
-            var actual = repo.Get(x => x.FakeCarModelID == 3);
+            var actual = repo.Get(x => x.CarModelID == 3);
             repo.Delete(list);
-            var expected = repo.Get(x => x.FakeCarModelID == 3);
+            var expected = repo.Get(x => x.CarModelID == 3);
 
             //asert
             Assert.AreNotEqual(expected, actual);

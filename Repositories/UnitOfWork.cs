@@ -9,32 +9,41 @@ using GenericRepository.Interface;
 using System.Data.Entity.Validation;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
+using CrossEntities.Interfaces;
+using Repositories.Interfaces;
 
 namespace Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-
-        private readonly GoodWillDbContext _context;
+        bool _disposed;
+        IGoodWillEntitiesContext _context;
+        IRepositoryProvider _provider;
 
         #region Constructors
-
-        public UnitOfWork() : this(new GoodWillDbContext())
-        { }
+        public UnitOfWork()
+        {
+            _context = new GoodWillDbContext();
+            _provider = new RepositoryProvider(_context, new RepositoryFactory());
+            _disposed = false;
+        }
+        public UnitOfWork(IGoodWillEntitiesContext context)
+        {
+            _context = context;
+            _provider = new RepositoryProvider(context, new RepositoryFactory());
+            _disposed = false;
+        }
 
         public UnitOfWork(GoodWillDbContext context)
         {
             _context = context;
-            RepositoryProvider = new RepositoryProvider(context, new RepositoryProvider());
+            
         }
-
         #endregion
-
-        private RepositoryProvider RepositoryProvider { get; set; }
 
         public IGenericRepository<T> GetStandardRepo<T>() where T : class
         {
-            return RepositoryProvider.GetStandartRepository<T>();
+            return _provider.GetStandartRepository<T>();
         }
 
         //public T GetRepo<T, TEntity>() where T : IGenericRepository<TEntity> where TEntity : class
@@ -52,10 +61,11 @@ namespace Repositories
             return _context.pr_GetCrossSelection();
         }
 
-        public void Dispose()
+        public async Task<ObjectResult<CrossSelectionResult>> GetCrossSelectionAsync()
         {
-            _context.Dispose();
+            return await Task.Run(() => { return GetCrossSelection(); });
         }
+        public void Dispose() { }
 
         public void SaveChanges()
         {
@@ -100,6 +110,5 @@ namespace Repositories
                 throw ex;
             }
         }
-
     }
 }

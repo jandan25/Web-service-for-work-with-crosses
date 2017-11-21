@@ -9,6 +9,7 @@ namespace WebAppCrosses.Models
 {
     public class ProductsAndOesModel
     {
+        [Key]
         public int ProductAndOeID { get; set; }
 
         [Required]

@@ -9,6 +9,7 @@ namespace WebAppCrosses.Models
 {
     public class VenycleTypesModel
     {
+        [Key]
         public int VenycleTypeID { get; set; }
 
         [StringLength(255, MinimumLength = 3)]

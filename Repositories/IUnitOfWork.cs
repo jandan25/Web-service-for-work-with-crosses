@@ -21,9 +21,13 @@ namespace Repositories
         /// </summary>
         ObjectResult<CrossSelectionResult> GetCrossSelection();
 
+        Task<ObjectResult<CrossSelectionResult>> GetCrossSelectionAsync();
+
         /// <summary>
         /// Асинхронная фиксация изменений в бд
         /// </summary>
         Task SaveChangesAsync();
     }
 }
+
+

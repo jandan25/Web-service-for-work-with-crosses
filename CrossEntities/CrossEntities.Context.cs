@@ -14,8 +14,9 @@ namespace CrossEntities
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
-    public partial class GoodWillDbContext : DbContext
+    using CrossEntities.Interfaces;
+
+    public partial class GoodWillDbContext : DbContext, IGoodWillEntitiesContext
     {
         public GoodWillDbContext()
             : base("name=GoodWillDbContext")
@@ -42,6 +43,21 @@ namespace CrossEntities
         public virtual ObjectResult<CrossSelectionResult> pr_GetCrossSelection()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CrossSelectionResult>("pr_GetCrossSelection");
+        }
+
+        IDbSet<Type> IGoodWillEntitiesContext.Set(Type Entity)
+        {
+            return (IDbSet<Type>)base.Set(Entity);
+        }
+
+        IDbSet<U> IGoodWillEntitiesContext.Set<U>()
+        {
+            return (IDbSet<U>)base.Set<U>();
+        }
+
+        public void SetModified<Entity>(Entity item) where Entity : class
+        {
+            Entry<Entity>(item).State = EntityState.Modified;
         }
     }
 }

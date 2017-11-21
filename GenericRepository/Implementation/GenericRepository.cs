@@ -6,15 +6,16 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using GenericRepository.Interface;
+using CrossEntities.Interfaces;
 
 namespace GenericRepository.Implementation
 {
     public class GenericRepository <T> : IGenericRepository<T> where T : class
     {
-        private readonly DbContext _context;
-        private readonly DbSet<T> _entities;
+        IGoodWillEntitiesContext _context;
+        IDbSet<T> _entities;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(IGoodWillEntitiesContext context)
         {
             this._context = context;
             _entities = context.Set<T>();
@@ -56,12 +57,6 @@ namespace GenericRepository.Implementation
         {
             IQueryable<T> query = GetByParamQuery(predicate, includeProperties);
             return await query.FirstOrDefaultAsync(predicate);
-        }
-
-        public virtual async Task<T> GetByIdAsync(object id)
-        {
-            if (id == null) throw new ArgumentException("Identifier is null");
-            return await _entities.FindAsync(id);
         }
 
         private IQueryable<T> GetQuery(Expression<Func<T,bool>> predicate = null,
@@ -125,7 +120,7 @@ namespace GenericRepository.Implementation
         {
             if (entity == null) throw  new ArgumentException("Entity is null");
             _entities.Attach(entity);
-           // SetEntityStateModified(entity);
+            //SetEntityStateModified(entity);
         }
 
         public virtual void Update(IEnumerable<T> entities)

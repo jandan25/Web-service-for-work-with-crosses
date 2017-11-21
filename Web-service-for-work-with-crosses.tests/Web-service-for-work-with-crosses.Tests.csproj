@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DALTests.cs" />
-    <Compile Include="fakeentities\FakeCarModels.cs" />
+    <Compile Include="fakeentities\FakeCarModelsSet.cs" />
+    <Compile Include="fakeentities\FakeDbEntityEntry.cs" />
+    <Compile Include="fakeentities\FakeDbSet.cs" />
     <Compile Include="fakeentities\FakeGenericRepository.cs" />
     <Compile Include="fakeentities\FakeGoodwillEntitesContext.cs" />
     <Compile Include="fakeentities\FakeSet.cs" />

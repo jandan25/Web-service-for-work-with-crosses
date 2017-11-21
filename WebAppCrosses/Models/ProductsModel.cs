@@ -9,6 +9,7 @@ namespace WebAppCrosses.Models
 {
     public class ProductsModel
     {
+        [Key]
         public int ProductID { get; set; }
 
         [RegularExpression("([1-9][0-9]*)")] 

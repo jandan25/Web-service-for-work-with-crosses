@@ -71,6 +71,7 @@
     <Compile Include="CrossSelectionResult.cs">
       <DependentUpon>CrossEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IGoodWillDbContext.cs" />
     <Compile Include="Manufactors.cs">
       <DependentUpon>CrossEntities.tt</DependentUpon>
     </Compile>

@@ -51,9 +51,6 @@ namespace CrossEntities
         public decimal HParam { get; set; }
         public decimal NrParam { get; set; }
         public string Comment { get; set; }
-        public byte[] ImageData { get; set; }
-        public string ImageMimeType { get; set; }
-        public Nullable<int> GroupID { get; set; }
         public int AverageSales { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
