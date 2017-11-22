@@ -33,8 +33,14 @@ namespace WebAppCrosses.Controllers
         {
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
+                //TODO: использовать асинхронность
+                // У тебя в unitOfWork есть метод, который делает то же самое (GetCrossSelectionAsync())
+                // Почему не использовать его вместо этого кода
                 var result = await Task.Factory.StartNew(() => unitOfWork.GetCrossSelection().ToList());
 
+                //TODO: убрать
+                // GetCrossSelection и так возвращает IList<CrossSelectionResult>
+                // зачем этот LINQ запрос нужен?
                 IEnumerable<CrossSelectionResult> records = (
                     from prGetCrossses in result
                     select new CrossSelectionResult
