@@ -65,7 +65,6 @@ namespace WebAppCrosses.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             if (id != idModel)
             {
                 return BadRequest();
@@ -73,6 +72,10 @@ namespace WebAppCrosses.Controllers
 
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
+                //TODO: Странный алоритм
+                // Получается, что ты не проверяешь наличие сущности в базе
+                // А если в базе нет такой сущности, которая передается в model?
+                // Я так понимаю именно из-за этого пришлось это repo.SetEntityStateModified(newmodel) вынести в отдельный метод
                 var newmodel = new T();
                 CopyModeltoEntity(model, newmodel);
 
