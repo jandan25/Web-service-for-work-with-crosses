@@ -49,7 +49,9 @@ namespace WebAppCrosses.Controllers
             {
                 var newcarmodel = new T();
                 CopyModeltoEntity (model, newcarmodel);
-
+                //TODO: нет проверки на уникальность
+                // Возможна ситуация, что запись с такими же параметрами, как model уже есть в базе.
+                // В этом случае твой код кинет исключение, что не правильно
                 var repo = unitOfWork.GetStandardRepo<T>();
                 repo.Insert(newcarmodel);
                 await unitOfWork.SaveChangesAsync();
