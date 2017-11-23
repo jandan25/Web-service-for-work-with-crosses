@@ -52,7 +52,7 @@ namespace WebAppCrosses.Attributes
         {
             context.Response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                Content = new StringContent("Data you provided is not supported.")
+                Content = new StringContent("Data you provided is not supported." + context.Exception.InnerException.InnerException.Message)
             };
             var trace = GlobalConfiguration.Configuration.Services.GetTraceWriter();
             trace.Info(context.Request, "Exception Error", context.Exception, "Error: ");

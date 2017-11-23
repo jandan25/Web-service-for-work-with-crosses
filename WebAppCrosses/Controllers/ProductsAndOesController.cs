@@ -33,28 +33,19 @@ namespace WebAppCrosses.Controllers
         {
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
-                //TODO: использовать асинхронность
-                // У тебя в unitOfWork есть метод, который делает то же самое (GetCrossSelectionAsync())
-                // Почему не использовать его вместо этого кода
-                var result = await Task.Factory.StartNew(() => unitOfWork.GetCrossSelection().ToList());
+                var result = await unitOfWork.GetCrossSelectionAsync();
+                return Ok(result);
+            }
+        }
 
-                //TODO: убрать
-                // GetCrossSelection и так возвращает IList<CrossSelectionResult>
-                // зачем этот LINQ запрос нужен?
-                IEnumerable<CrossSelectionResult> records = (
-                    from prGetCrossses in result
-                    select new CrossSelectionResult
-                    {
-                        Model = prGetCrossses.Model,
-                        ManufactorTS = prGetCrossses.ManufactorTS,
-                        Code = prGetCrossses.Code,
-                        MotorName = prGetCrossses.MotorName,
-                        Comment = prGetCrossses.Comment,
-                        MotorEngine = prGetCrossses.MotorEngine,
-                        TypeTs = prGetCrossses.TypeTs
-                    }).ToList();
-
-                return Ok(records);
+        protected override void DbCheck(ProductsAndOesModel model)
+        {
+            using (IUnitOfWork unitOfWork = _factory.Create())
+            {
+                var repo = unitOfWork.GetStandardRepo<ProductsAndOes>();
+                var result = repo.GetByParam(x => x.Products.ProductID == model.ProductID);
+                if (result == null)
+                    ModelState.AddModelError("ProductsAndOes", "ProductID not exist's.");
             }
         }
     }

@@ -14,5 +14,8 @@ namespace WebAppCrosses.Controllers
     {
         public VenycleTypesController() : base()
         { }
+
+        protected override void DbCheck(VenycleTypesModel model)
+        { }
     }
 }

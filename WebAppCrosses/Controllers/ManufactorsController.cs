@@ -5,6 +5,7 @@ using System.Web.Http.Description;
 using CrossEntities;
 using WebAppCrosses.Models;
 using static WebAppCrosses.Utils;
+using Repositories;
 
 namespace WebAppCrosses.Controllers
 {
@@ -13,5 +14,16 @@ namespace WebAppCrosses.Controllers
     {
         public ManufactorsController() : base()
         { }
+
+        protected override void DbCheck(ManufactorsModel model)
+        {
+            using (IUnitOfWork unitOfWork = _factory.Create())
+            {
+                var repo = unitOfWork.GetStandardRepo<Manufactors>();
+                var result = repo.GetByParam(x => x.VenycleTypes.VenycleTypeID == model.ManufactorID);
+                if (result == null)
+                    ModelState.AddModelError("VenycleTypes", "VenycleTypeID not exist's.");
+            }
+        }
     }
 }

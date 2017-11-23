@@ -17,6 +17,8 @@ namespace WebAppCrosses.Controllers
     {
         public IUnitOfWorkFactory _factory;
 
+        protected virtual void DbCheck(U model) { }
+
         public BaseController(IUnitOfWorkFactory factory)
         {
             _factory = factory;
@@ -40,6 +42,7 @@ namespace WebAppCrosses.Controllers
         [HttpPost]
         public virtual async Task<IHttpActionResult> Post(U model)
         {
+            DbCheck(model);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -47,26 +50,32 @@ namespace WebAppCrosses.Controllers
 
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
-                var newcarmodel = new T();
-                CopyModeltoEntity (model, newcarmodel);
-                //TODO: нет проверки на уникальность
-                // Возможна ситуация, что запись с такими же параметрами, как model уже есть в базе.
-                // В этом случае твой код кинет исключение, что не правильно
+                var newmodel = new T();
+                CopyModeltoEntity (model, newmodel);
                 var repo = unitOfWork.GetStandardRepo<T>();
-                repo.Insert(newcarmodel);
-                await unitOfWork.SaveChangesAsync();
-                return Ok(newcarmodel);
+                var id = model.PropertyByAtt<KeyAttribute>().GetValue(model);
+                var result = await Task.Factory.StartNew(() => repo.GetById(id));
+                if (result == null)
+                {
+                    repo.Insert(newmodel);
+                    await unitOfWork.SaveChangesAsync();
+                    return Ok(newmodel);
+                }
+                else
+                    return BadRequest("Data you provided is not supported.");
             }
         }
 
         [HttpPut]
         public virtual async Task<IHttpActionResult> Put(int id, U model)
         {
-            var idModel = (int)model.PropertyByAtt<KeyAttribute>().GetValue(model);
+            DbCheck(model);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var idModel = (int)model.PropertyByAtt<KeyAttribute>().GetValue(model);
             if (id != idModel)
             {
                 return BadRequest();
@@ -74,18 +83,20 @@ namespace WebAppCrosses.Controllers
 
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
-                //TODO: Странный алоритм
-                // Получается, что ты не проверяешь наличие сущности в базе
-                // А если в базе нет такой сущности, которая передается в model?
-                // Я так понимаю именно из-за этого пришлось это repo.SetEntityStateModified(newmodel) вынести в отдельный метод
                 var newmodel = new T();
                 CopyModeltoEntity(model, newmodel);
-
                 var repo = unitOfWork.GetStandardRepo<T>();
-                repo.Update(newmodel);
-                repo.SetEntityStateModified(newmodel);
-                await unitOfWork.SaveChangesAsync();
-                return StatusCode(HttpStatusCode.NoContent);
+
+                var result = await Task.Factory.StartNew(() => repo.GetById(idModel));
+                if (result != null)
+                {
+                    CopyModeltoEntity(model, result);
+                    repo.Update(result);
+                    await unitOfWork.SaveChangesAsync();
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else
+                    return BadRequest("Data you provided is not supported.");
             }
         }
     }

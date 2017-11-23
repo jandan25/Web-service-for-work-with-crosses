@@ -5,6 +5,7 @@ using System.Web.Http.Description;
 using CrossEntities;
 using WebAppCrosses.Models;
 using static WebAppCrosses.Utils;
+using Repositories;
 
 namespace WebAppCrosses.Controllers
 {
@@ -13,5 +14,17 @@ namespace WebAppCrosses.Controllers
     {
         public ProductsAndMotorsController() : base()
         { }
+
+        protected override void DbCheck(ProductsAndMotorsModel model)
+        {
+            using (IUnitOfWork unitOfWork = _factory.Create())
+            {
+                var repo = unitOfWork.GetStandardRepo<ProductsAndMotors>();
+                var result = repo.GetByParam(x => x.Products.ProductID == model.ProductID &&
+                x.Motors.MotorID == model.MotorID);
+                if (result == null)
+                    ModelState.AddModelError("ProductsAndMotors", "ProductID or MotorID not exist's.");
+            }
+        }
     }
 }

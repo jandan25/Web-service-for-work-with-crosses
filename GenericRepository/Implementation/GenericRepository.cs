@@ -120,7 +120,7 @@ namespace GenericRepository.Implementation
         {
             if (entity == null) throw  new ArgumentException("Entity is null");
             _entities.Attach(entity);
-            //SetEntityStateModified(entity);
+            SetEntityStateModified(entity);
         }
 
         public virtual void Update(IEnumerable<T> entities)

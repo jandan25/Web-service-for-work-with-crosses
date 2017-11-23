@@ -1,13 +1,7 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using CrossEntities;
+﻿using CrossEntities;
 using WebAppCrosses.Models;
-using static WebAppCrosses.Utils;
-using System.Collections.Generic;
-using Web_service_for_work_with_crosses.tests.fakeentities;
 using Repositories;
+using System.Web.Http;
 
 namespace WebAppCrosses.Controllers
 {
@@ -16,5 +10,16 @@ namespace WebAppCrosses.Controllers
     {
         public CarModelsController() : base()
         { }
+
+        protected override void DbCheck(CarModelsModel model)
+        {
+            using (IUnitOfWork unitOfWork = _factory.Create())
+            {
+                var repo = unitOfWork.GetStandardRepo<CarModels>();
+                var result = repo.GetByParam(x => x.Manufactors.ManufactorID == model.ManufactorID);
+                if (result == null)
+                    ModelState.AddModelError("Manufactor", "ManufactorID not exist's.");
+            }
+        }
     }
 }
