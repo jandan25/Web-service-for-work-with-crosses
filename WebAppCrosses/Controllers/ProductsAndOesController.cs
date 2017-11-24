@@ -38,14 +38,18 @@ namespace WebAppCrosses.Controllers
             }
         }
 
-        protected override void DbCheck(ProductsAndOesModel model)
+        protected override bool DbCheck(ProductsAndOesModel model)
         {
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
                 var repo = unitOfWork.GetStandardRepo<ProductsAndOes>();
                 var result = repo.GetByParam(x => x.Products.ProductID == model.ProductID);
                 if (result == null)
+                {
                     ModelState.AddModelError("ProductsAndOes", "ProductID not exist's.");
+                    return false;
+                }
+                return true;
             }
         }
     }

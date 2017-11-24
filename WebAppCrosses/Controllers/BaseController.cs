@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static WebAppCrosses.Utils;
 using System.ComponentModel.DataAnnotations;
+using System.Collections;
 
 namespace WebAppCrosses.Controllers
 {
@@ -17,7 +18,7 @@ namespace WebAppCrosses.Controllers
     {
         public IUnitOfWorkFactory _factory;
 
-        protected virtual void DbCheck(U model) { }
+        protected virtual bool DbCheck(U model) { return true; }
 
         public BaseController(IUnitOfWorkFactory factory)
         {
@@ -42,8 +43,12 @@ namespace WebAppCrosses.Controllers
         [HttpPost]
         public virtual async Task<IHttpActionResult> Post(U model)
         {
-            DbCheck(model);
             if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            else if (!DbCheck(model))
             {
                 return BadRequest(ModelState);
             }
@@ -69,8 +74,11 @@ namespace WebAppCrosses.Controllers
         [HttpPut]
         public virtual async Task<IHttpActionResult> Put(int id, U model)
         {
-            DbCheck(model);
             if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else if (!DbCheck(model))
             {
                 return BadRequest(ModelState);
             }
@@ -96,7 +104,7 @@ namespace WebAppCrosses.Controllers
                     return StatusCode(HttpStatusCode.NoContent);
                 }
                 else
-                    return BadRequest("Data you provided is not supported.");
+                    return Content(HttpStatusCode.NotFound, "Data you provided is not supported.");
             }
         }
     }

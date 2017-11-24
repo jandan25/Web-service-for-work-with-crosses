@@ -150,6 +150,7 @@
     <Compile Include="Controllers\MotorsController.cs" />
     <Compile Include="Controllers\ProductsAndMotorsController.cs" />
     <Compile Include="Controllers\ProductsAndOesController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\VenycleTypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

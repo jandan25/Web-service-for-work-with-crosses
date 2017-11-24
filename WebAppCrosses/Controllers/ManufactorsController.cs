@@ -6,6 +6,7 @@ using CrossEntities;
 using WebAppCrosses.Models;
 using static WebAppCrosses.Utils;
 using Repositories;
+using System.Collections;
 
 namespace WebAppCrosses.Controllers
 {
@@ -15,14 +16,30 @@ namespace WebAppCrosses.Controllers
         public ManufactorsController() : base()
         { }
 
-        protected override void DbCheck(ManufactorsModel model)
+        protected override bool DbCheck(ManufactorsModel model)
         {
             using (IUnitOfWork unitOfWork = _factory.Create())
             {
                 var repo = unitOfWork.GetStandardRepo<Manufactors>();
-                var result = repo.GetByParam(x => x.VenycleTypes.VenycleTypeID == model.ManufactorID);
-                if (result == null)
-                    ModelState.AddModelError("VenycleTypes", "VenycleTypeID not exist's.");
+                var result = repo.Get(x => x.VenycleTypeID == model.VenycleTypeID);
+                IEnumerator resultEn = result.GetEnumerator();
+                if (!resultEn.MoveNext())
+                {
+                    ModelState.AddModelError("Manufactor", "ManufactorID not exists.");
+                    return false;
+                }
+                else
+                {
+                    foreach (var enty in result)
+                    {
+                        if (enty.Name == model.Name)
+                        {
+                            ModelState.AddModelError("Manufactors", "Name already exists");
+                            return false;
+                        }
+                    }
+                }
+                return true;
             }
         }
     }
